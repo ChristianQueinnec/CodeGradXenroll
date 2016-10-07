@@ -11,7 +11,7 @@ The JSON user record is an object looking like (we use a Javascript
 syntax rather than a pure more bloated JSON syntax)(not all fields
 are necessarily present):
 
-```json
+```javascript
 { kind: 'authenticationAnswer',
   login => 'john.doe@example.org',
   email => 'john.doe@example.org',
