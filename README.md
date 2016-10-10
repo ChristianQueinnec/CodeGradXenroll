@@ -133,7 +133,11 @@ description record if the modifications are successful.
 Invalid the cookie (named `u`) so the user will need to reauthenticate.
 
 
+# Future work
 
+This API should use a captcha (or equivalent) to avoid robots.
+It should also provide the Javascript code along the lines of the
+other CodeGradX modules.
 
 
 
