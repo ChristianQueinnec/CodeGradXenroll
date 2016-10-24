@@ -54,10 +54,10 @@ CodeGradX.State.prototype.userConnect = function (login, password) {
         return when(state.currentUser);
     });
 };
-        
-CodeGradX.State.prototype.userGetLink = function (login) {
+
+CodeGradX.State.prototype.userGetLink = function (email) {
     var state = this;
-    state.debug('userGetLink1', login);
+    state.debug('userGetLink1', email);
     return state.sendAXServer('x', {
         path: '/fromp/getlink',
         method: 'POST',
@@ -66,7 +66,7 @@ CodeGradX.State.prototype.userGetLink = function (login) {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         entity: {
-            login: login
+            email: email
         }
     }).then(function (response) {
         //console.log(response);
@@ -77,7 +77,44 @@ CodeGradX.State.prototype.userGetLink = function (login) {
     });
 };
 
-CodeGradX.State.prototype.userWwhoAmI = function () {
+CodeGradX.State.prototype.userResume = function (token) {
+    var state = this;
+    state.debug('userResume1', token);
+    return state.sendAXServer('x', {
+        path: '/fromp/resume/' + token,
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    }).then(function (response) {
+        //console.log(response);
+        state.debug('userResume2', response);
+        state.currentUser = new CodeGradX.User(response.entity);
+        return when(state.currentUser);
+    });
+};
+
+CodeGradX.State.prototype.userSignUA = function (token) {
+    var state = this;
+    state.debug('userSignUA1', token);
+    return state.sendAXServer('x', {
+        path: '/fromp/sign/' + token,
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    }).then(function (response) {
+        //console.log(response);
+        state.debug('userSignUA2', response);
+        state.currentUser = new CodeGradX.User(response.entity);
+        return when(state.currentUser);
+    });
+};
+
+CodeGradX.State.prototype.userWhoAmI = function () {
+    var state = this;
     state.debug('userWhoAmI1');
     return state.sendAXServer('x', {
         path: '/fromp/whoami',
@@ -133,11 +170,11 @@ CodeGradX.State.prototype.userGetAgreement = function () {
     });
 };
 
-CodeGradX.State.prototype.userModify = function (data) {
+CodeGradX.State.prototype.userSelfModify = function (data) {
     var state = this;
-    state.debug('userModify1', login);
+    state.debug('userSelfModify1', login);
     var entity = {};
-    var allowedKeys = ['pseudo', 'email', 'lastname', 'firstname', 'password']; 
+    var allowedKeys = CodeGradX.State.prototype.userSelfModify.allowedKeys;
     for ( var i=0 ; i<allowedKeys.length ; i++ ) {
         var key = allowedKeys[i];
         var value = data[key];
@@ -155,11 +192,13 @@ CodeGradX.State.prototype.userModify = function (data) {
         entity: entity
     }).then(function (response) {
         //console.log(response);
-        state.debug('userModify2', response);
+        state.debug('userSelfModify2', response);
         state.currentUser = new CodeGradX.User(response.entity);
         return when(state.currentUser);
     });
 };
+CodeGradX.State.prototype.userSelfModify.allowedKeys =
+    ['pseudo', 'email', 'lastname', 'firstname', 'password'];
 
 CodeGradX.State.prototype.userDisconnect = function () {
     var state = this;
