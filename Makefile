@@ -12,7 +12,7 @@ lint :
 
 nsp+snyk : 
 	node_modules/.bin/nsp check
-	node_modules/.bin/snyk test codegradxenroll
+#	node_modules/.bin/snyk test codegradxenroll
 
 tests : 
 	@echo " tests require a running vmauthor..."
