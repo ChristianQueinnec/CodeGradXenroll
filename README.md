@@ -71,6 +71,9 @@ The given email should be correct, the user should not be already
 existent in the database and the email should not be an existing
 email.
 
+Additionally to the `email` parameter there must be a
+`g-recaptcha-response` parameter (see https://www.google.com/recaptcha).
+
 When the user is created, an mail is sent with an email confirmation
 link. See next request. 
 
@@ -87,8 +90,9 @@ if need be.
 This request is used to sign the current version of the User Agreement.
 In order to sign, you need to give back the token previously received.
 
-The first time the email is confirmed and the User Agreement is
-signed then a welcome mail is sent.
+The first time the email is confirmed and the User Agreement is signed
+then a welcome mail is sent. It is possible to sign the User Agreement
+before confirming email.
 
 ## `/fromp/getua`
 
@@ -107,9 +111,10 @@ back.
 
 ## `/fromp/getlink`
 
-This request allows the user to request a temporary link which will be
-sent by email. The temporary link will allow the user to resume the
-enrolment process with the next request.
+This is a POST request with `login` parameter. It allows the
+user to request a temporary link which will be sent by email. The
+temporary link will allow the user to resume the enrolment process
+with the next request.
 
 ## `/fromp/reconnect/:token`
 
