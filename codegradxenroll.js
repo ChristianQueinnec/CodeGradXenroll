@@ -171,7 +171,7 @@ CodeGradX.State.prototype.userCurrent = function () {
         return when(state.currentUser);
     }
     return state.userWhoAmI();
-}
+};
 
 /** Enroll a new user. 
 
