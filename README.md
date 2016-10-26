@@ -5,6 +5,14 @@ handles the enrollment process is an `x.paracamplus.com` server or its
 redunded clones. The API uses a REST style, responses are JSON record
 describing a user. X servers are reachable in https only.
 
+## Enrolment process
+
+To be enrolled, a user must first ask for enrolment with an email. A
+mail is sent so the user may confirm its email after clicking on the
+temporary link contained in the mail. The third and last step is to
+sign the User Agreement then the user receives a cookie that makes
+available the various sites offering exercises.
+
 ## User description record
 
 The JSON user record is an object looking like (not all fields are
