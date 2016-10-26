@@ -1,6 +1,6 @@
 {
   "name": "codegradxenroll",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Javascript Library to register users with the CodeGradX infrastructure. Runs on Node.js or within browsers",
   "keywords": [
     "CodeGradX",

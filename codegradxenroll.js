@@ -55,6 +55,13 @@ CodeGradX.State.prototype.userConnect = function (login, password) {
     });
 };
 
+/** Ask for a temporary link to be received by email.
+
+    @param {string} email - real login or email address
+    @returns {Promise<User>} yields {User}
+
+*/
+
 CodeGradX.State.prototype.userGetLink = function (email) {
     var state = this;
     state.debug('userGetLink1', email);
@@ -77,6 +84,13 @@ CodeGradX.State.prototype.userGetLink = function (email) {
     });
 };
 
+/** Resume the enrolment process.
+
+    @param {string} token - resumption token
+    @returns {Promise<User>} yields {User}
+
+*/
+
 CodeGradX.State.prototype.userResume = function (token) {
     var state = this;
     state.debug('userResume1', token);
@@ -94,6 +108,13 @@ CodeGradX.State.prototype.userResume = function (token) {
         return when(state.currentUser);
     });
 };
+
+/** Sign the current version of the User Agreement.
+
+    @param {string} token - signing token
+    @returns {Promise<User>} yields {User}
+
+*/
 
 CodeGradX.State.prototype.userSignUA = function (token) {
     var state = this;
@@ -113,6 +134,12 @@ CodeGradX.State.prototype.userSignUA = function (token) {
     });
 };
 
+/** Determine who the user is. The user must be authenticated.
+
+    @returns {Promise<User>} yields {User}
+
+*/
+
 CodeGradX.State.prototype.userWhoAmI = function () {
     var state = this;
     state.debug('userWhoAmI1');
@@ -130,6 +157,29 @@ CodeGradX.State.prototype.userWhoAmI = function () {
         return when(state.currentUser);
     });
 };
+
+/** Get the current User.
+
+    @returns {Promise<User>} yields {User}
+
+*/
+
+CodeGradX.State.prototype.userCurrent = function () {
+    var state = this;
+    state.debug('userCurrent1');
+    if ( state.currentUser ) {
+        return when(state.currentUser);
+    }
+    return state.userWhoAmI();
+}
+
+/** Enroll a new user. 
+
+    @param {string} login - email
+    @param {string} captcha - g-captcha-response
+    @returns {Promise<User>} yields {User}
+
+*/
 
 CodeGradX.State.prototype.userEnroll = function (login, captcha) {
     var state = this;
@@ -153,6 +203,12 @@ CodeGradX.State.prototype.userEnroll = function (login, captcha) {
     });
 };
 
+/** Get the current version of the User Agreement.
+
+    @returns {Promise<User>} yields {User}
+
+*/
+
 CodeGradX.State.prototype.userGetAgreement = function () {
     var state = this;
     state.debug('userUA1', login);
@@ -169,6 +225,14 @@ CodeGradX.State.prototype.userGetAgreement = function () {
         return when(uatext);
     });
 };
+
+/** Modify the profile of the current user. Data is an object with
+    fields among the allowedKeys.
+
+    @param {object} data - fields of the profile to be modified
+    @returns {Promise<User>} yields {User}
+
+*/
 
 CodeGradX.State.prototype.userSelfModify = function (data) {
     var state = this;
@@ -199,6 +263,12 @@ CodeGradX.State.prototype.userSelfModify = function (data) {
 };
 CodeGradX.State.prototype.userSelfModify.allowedKeys =
     ['pseudo', 'email', 'lastname', 'firstname', 'password'];
+
+/** Disconnect the user.
+
+    @returns {Promise<User>} yields {User}
+
+*/
 
 CodeGradX.State.prototype.userDisconnect = function () {
     var state = this;
