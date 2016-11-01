@@ -1,17 +1,17 @@
-# CodeGradX enrollment API
+# CodeGradX enrolment API
 
-This document describes the enrollment process. The server that
-handles the enrollment process is an `x.paracamplus.com` server or its
+This document describes the enrolment process. The server that
+handles the enrolment process is an `x.paracamplus.com` server or its
 redunded clones. The API uses a REST style, responses are JSON record
 describing a user. X servers are reachable in https only.
 
 ## Enrolment process
 
-To be enrolled, a user must first ask for enrolment with an email. A
-mail is sent so the user may confirm its email after clicking on the
-temporary link contained in the mail. The third and last step is to
-sign the User Agreement then the user receives a cookie that makes
-available the various sites offering exercises.
+To be enrolled, a user must first provide an email and ask for
+enrolment. A mail is then sent so the user can confirm its email after
+clicking on the temporary link contained in the mail. The third and
+last step is to sign the User Agreement after that the user receives a
+cookie that makes available the various sites offering exercises.
 
 ## User description record
 
@@ -74,9 +74,10 @@ certificates. The last one, `pseudo` is used when citing a person to
 other persons. 
 
 The `campaigns` field is an array of Campaign objects (see
-`codegradxlib`) the user belong to. There should be at least one
-campaign, named `free` that proposes a set of exercises in various
-programming languages.
+`codegradxlib`) the user belong to. A campaign corresponds to a set of
+exercises offered to a set of users for a given period of time. There
+should be at least one campaign, named `free` that proposes a set of
+exercises in various programming languages.
 
 Some requests return a partial user description record reduced to a
 very restricted set of fields. This is the case for requests that may
@@ -98,8 +99,8 @@ used by someone.
 Additionally to the `email` parameter there must be a
 `g-recaptcha-response` parameter (see https://www.google.com/recaptcha).
 
-When the user is created, an mail is sent with an email confirmation
-link. See next request. If that request is sent another time, an email
+When the user is created, an mail is sent with a confirmation
+link, see next request. If that request is sent another time, an email
 confirmation will be sent again if the email was not yet confirmed.
 The response is always a partial user description record.
 
@@ -127,7 +128,7 @@ This request redirects to the User Agreement.
 ### `/fromp/resume/:token`
 
 Resume the enrolment process. This request is normally done from a
-browser. Depending on the state of the enrollment, it brings back a
+browser. Depending on the state of the enrolment, it brings back a
 partial or full user description record.
 
 ### `/fromp/connect`
