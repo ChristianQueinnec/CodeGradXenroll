@@ -1,6 +1,6 @@
 {
   "name": "codegradxenroll",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Javascript Library to register users with the CodeGradX infrastructure. Runs on Node.js or within browsers",
   "keywords": [
     "CodeGradX",
@@ -24,7 +24,7 @@
     "sax": "^1.2.1",
     "when": "^3.7.4",
     "xml2js": "^0.4.17",
-    "codegradxlib": "^1.0.34"
+    "codegradxlib": "^1.0.35"
   },
   "devDependencies": {
     "jasmine": "^2.3.2",
