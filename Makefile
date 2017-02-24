@@ -1,6 +1,6 @@
 # CodeGradXenroll
 
-work : lint tests
+work : lint nsp+snyk tests
 clean :
 	-rm *~
 	-rm README.log README.tex
@@ -8,10 +8,12 @@ clean :
 # ############## Working rules:
 
 lint :
-	jshint codegradxenroll.js spec/*.js
+	jshint codegradxenroll.js
 
-nsp+snyk : 
+nsp+snyk :
+	npm link nsp
 	node_modules/.bin/nsp check
+	npm link snyk
 	-node_modules/.bin/snyk test codegradxenroll
 
 tests : 
