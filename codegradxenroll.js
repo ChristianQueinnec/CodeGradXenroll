@@ -24,6 +24,19 @@ var when = require('when');
 var nodefn = require('when/node');
 var rest = require('rest');
 
+/** Determine the original site.
+
+    @returns {URLprefix}
+
+*/
+
+CodeGradX.State.prototype.guessDomain = function () {
+    var uri = window.document.documentURI;
+    var re = new RegExp('^(https?://[^/]+).*$');
+    uri = uri.replace(re, "$1");
+    return uri;
+};
+
 /** Connect the user. This will return a Promise leading to
     some User.
 
@@ -94,6 +107,9 @@ CodeGradX.State.prototype.userGetLink = function (email) {
 CodeGradX.State.prototype.userResume = function (token) {
     var state = this;
     state.debug('userResume1', token);
+    if ( ! token ) {
+        return Promise.reject("empty token");
+    }
     return state.sendAXServer('x', {
         path: '/fromp/resume/' + token,
         method: 'POST',
@@ -134,7 +150,9 @@ CodeGradX.State.prototype.userSignUA = function (token) {
     });
 };
 
-/** Determine who the user is. The user must be authenticated.
+/** Determine who the user is. The X server is invoked to check the
+    user if authenticated. The `/fromp/whoami` is more detailed thant
+    the `/whoami` request.
 
     @returns {Promise<User>} yields {User}
 
@@ -146,6 +164,7 @@ CodeGradX.State.prototype.userWhoAmI = function () {
     return state.sendAXServer('x', {
         path: '/fromp/whoami',
         method: 'GET',
+        params: { site: state.guessDomain() },
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -158,7 +177,7 @@ CodeGradX.State.prototype.userWhoAmI = function () {
     });
 };
 
-/** Get the current User.
+/** Get the current User if known otherwise ask the X server.
 
     @returns {Promise<User>} yields {User}
 
@@ -249,6 +268,7 @@ CodeGradX.State.prototype.userSelfModify = function (data) {
     return state.sendAXServer('x', {
         path: '/fromp/selfmodify',
         method: 'POST',
+        params: { site: state.guessDomain() },
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -276,6 +296,7 @@ CodeGradX.State.prototype.userDisconnect = function () {
     return state.sendAXServer('x', {
         path: '/fromp/disconnect',
         method: 'GET',
+        params: { site: state.guessDomain() },
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded'
