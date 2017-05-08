@@ -27,6 +27,8 @@ tests :
 # content of CodeGradXenroll.tgz 
 
 publish : lint nsp+snyk bower.json clean
+	-rm -rf node_modules/codegradx*
+	npm install -S codegradxlib
 	git status .
 	-git commit -m "NPM publication `date`" .
 	git push
@@ -35,6 +37,7 @@ publish : lint nsp+snyk bower.json clean
 	cd tmp/CodeGradXenroll/ && npm version patch && npm publish
 	cp -pf tmp/CodeGradXenroll/package.json .
 	rm -rf tmp
+	npm install -g codegradxenroll
 
 CodeGradXenroll.tgz :
 	-rm -rf tmp
@@ -49,6 +52,7 @@ REMOTE	=	www.paracamplus.com
 install : CodeGradXenroll.tgz
 	rsync -avu CodeGradXenroll.tgz \
 		${REMOTE}:/var/www/www.paracamplus.com/Resources/Javascript/
+	npm install -g codegradxenroll
 
 # ############## bower
 
