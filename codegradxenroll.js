@@ -1,6 +1,7 @@
-/**
+// CodeGradXenroll
+// Time-stamp: "2017-07-22 19:59:01 queinnec"
 
-Javascript Library to register users with the CodeGradX infrastructure.
+/**  Javascript Library to register users with the CodeGradX infrastructure.
 
 ## Installation
 
