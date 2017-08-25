@@ -16,7 +16,7 @@ nsp+snyk :
 	npm link snyk
 	-node_modules/.bin/snyk test codegradxenroll
 
-tests : 
+XXtests : 
 	@echo " tests require a running vmauthor..."
 	ping -c 3 xvmauthor.codegradx.org
 	jasmine 2>&1 | tee /tmp/spec.log

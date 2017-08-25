@@ -19,7 +19,7 @@
     "url": "https://github.com/ChristianQueinnec/CodeGradXenroll.git"
   },
   "dependencies": {
-    "codegradxlib": "^1.0.59",
+    "codegradxlib": "^1.0.62",
     "lodash": "^3.10.1",
     "rest": "^1.3.2",
     "sax": "^1.2.1",
