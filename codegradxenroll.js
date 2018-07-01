@@ -1,5 +1,5 @@
 // CodeGradXenroll
-// Time-stamp: "2017-07-22 19:59:01 queinnec"
+// Time-stamp: "2018-07-01 18:11:56 queinnec"
 
 /**  Javascript Library to register users with the CodeGradX infrastructure.
 
@@ -20,10 +20,7 @@ var CodeGradX = require('codegradxlib');
 /** re-export the `CodeGradX` object */
 module.exports = CodeGradX;
 
-var _    = require('lodash');
 var when = require('when');
-var nodefn = require('when/node');
-var rest = require('rest');
 
 /** Determine the original site.
 
@@ -50,6 +47,10 @@ CodeGradX.State.prototype.guessDomain = function () {
 CodeGradX.State.prototype.userConnect = function (login, password) {
     var state = this;
     state.debug('userConnect1', login);
+    let params = { login, password };
+    if ( FW4EX.currentCampaignName ) {
+        params.campaign = FW4EX.currentCampaignName;
+    }
     return state.sendAXServer('x', {
         path: '/fromp/connect',
         method: 'POST',
@@ -57,10 +58,7 @@ CodeGradX.State.prototype.userConnect = function (login, password) {
             'Accept': 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        entity: {
-            login: login,
-            password: password
-        }
+        entity: params
     }).then(function (response) {
         //console.log(response);
         state.debug('userConnect2', response);
@@ -162,10 +160,16 @@ CodeGradX.State.prototype.userSignUA = function (token) {
 CodeGradX.State.prototype.userWhoAmI = function () {
     var state = this;
     state.debug('userWhoAmI1');
+    let params = {
+        site: state.guessDomain()
+    };
+    if ( FW4EX.currentCampaignName ) {
+        params.campaign = FW4EX.currentCampaignName;
+    }
     return state.sendAXServer('x', {
         path: '/fromp/whoami',
         method: 'GET',
-        params: { site: state.guessDomain() },
+        params: params,
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -231,7 +235,7 @@ CodeGradX.State.prototype.userEnroll = function (login, captcha) {
 
 CodeGradX.State.prototype.userGetAgreement = function () {
     var state = this;
-    state.debug('userUA1', login);
+    state.debug('userUA1');
     return state.sendAXServer('x', {
         path: '/fromp/getua',
         method: 'GET',
@@ -241,7 +245,7 @@ CodeGradX.State.prototype.userGetAgreement = function () {
         }
     }).then(function (uatext) {
         //console.log(response);
-        state.debug('userUA2', response);
+        state.debug('userUA2', uatext);
         return when(uatext);
     });
 };
@@ -256,7 +260,7 @@ CodeGradX.State.prototype.userGetAgreement = function () {
 
 CodeGradX.State.prototype.userSelfModify = function (data) {
     var state = this;
-    state.debug('userSelfModify1', login);
+    state.debug('userSelfModify1');
     var entity = {};
     var allowedKeys = CodeGradX.State.prototype.userSelfModify.allowedKeys;
     for ( var i=0 ; i<allowedKeys.length ; i++ ) {
@@ -293,7 +297,7 @@ CodeGradX.State.prototype.userSelfModify.allowedKeys =
 
 CodeGradX.State.prototype.userDisconnect = function () {
     var state = this;
-    state.debug('userDisconnect1', login);
+    state.debug('userDisconnect1');
     return state.sendAXServer('x', {
         path: '/fromp/disconnect',
         method: 'GET',

@@ -1,6 +1,6 @@
 {
   "name": "codegradxenroll",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Javascript Library to register users with the CodeGradX infrastructure. Runs on Node.js or within browsers",
   "keywords": [
     "CodeGradX",
@@ -19,7 +19,7 @@
     "url": "https://github.com/ChristianQueinnec/CodeGradXenroll.git"
   },
   "dependencies": {
-    "codegradxlib": "^2.0.12",
+    "codegradxlib": "^2.0.15",
     "lodash": "^4.17.10",
     "rest": "^2.0.0",
     "sax": "^1.2.4",

@@ -8,7 +8,7 @@ clean :
 # ############## Working rules:
 
 lint :
-	jshint codegradxenroll.js
+	eslint codegradxenroll.js
 
 nsp+snyk :
 	npm link nsp
@@ -21,6 +21,15 @@ XXtests :
 	ping -c 3 xvmauthor.codegradx.org
 	jasmine 2>&1 | tee /tmp/spec.log
 	@echo "*** Report with         less /tmp/spec.log"
+
+update :
+	-rm -rf node_modules
+	npm install codegradxlib@`jq -r .version < ../CodeGradXlib/package.json`
+	npm install
+
+refresh :
+	cp -p ../CodeGradXlib/codegradxlib.js \
+	   node_modules/codegradxlib/
 
 # ############## NPM package
 # Caution: npm takes the whole directory that is . and not the sole
