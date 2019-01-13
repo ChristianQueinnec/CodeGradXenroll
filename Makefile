@@ -37,7 +37,7 @@ refresh :
 
 publish : lint nsp+snyk bower.json clean
 	-rm -rf node_modules/codegradx*
-	npm install -S codegradxlib
+	npm install codegradxlib@`jq -r .version < ../CodeGradXlib/package.json`
 	git status .
 	-git commit -m "NPM publication `date`" .
 	git push
@@ -46,7 +46,7 @@ publish : lint nsp+snyk bower.json clean
 	cd tmp/CodeGradXenroll/ && npm version patch && npm publish
 	cp -pf tmp/CodeGradXenroll/package.json .
 	rm -rf tmp
-	npm install -g codegradxenroll
+	npm install -g codegradxenroll@`jq -r .version < package.json`
 
 CodeGradXenroll.tgz :
 	-rm -rf tmp
