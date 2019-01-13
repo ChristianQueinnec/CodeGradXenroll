@@ -35,7 +35,7 @@ refresh :
 # Caution: npm takes the whole directory that is . and not the sole
 # content of CodeGradXenroll.tgz 
 
-publish : lint nsp+snyk bower.json clean
+publish : lint bower.json clean
 	-rm -rf node_modules/codegradx*
 	npm install codegradxlib@`jq -r .version < ../CodeGradXlib/package.json`
 	git status .
